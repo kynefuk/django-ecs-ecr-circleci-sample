@@ -1,10 +1,19 @@
 version: 2.1
 orbs:
   aws-ecr: circleci/aws-ecr@0.0.2
+  aws-ecs: circleci/aws-ecs@0.0.3
 workflows:
   build-and-push-image:
+  #build-and-deploy:
     jobs:
       - aws-ecr/build_and_push_image:
           account-url: "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com"
-          region: ${AWS_DEFAULT_REGION}
           repo: "${AWS_RESOURCE_NAME_PREFIX}"
+          region: ${AWS_DEFAULT_REGION}
+
+      - aws-ecs/deploy-service-update:
+          requires:
+            - aws-ecr/build_and_push_image
+          aws-region: ${AWS_DEFAULT_REGION}
+          family: "${TASK_DEFINITION}-service"
+          cluster-name: "${CLUSTER_NAME}-cluster"

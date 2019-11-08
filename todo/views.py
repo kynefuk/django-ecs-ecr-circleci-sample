@@ -22,3 +22,7 @@ class TodoCreateView(generic.CreateView):
 
     def get_success_url(self):
         return reverse('todo:list')
+
+
+def about(request):
+    return HttpResponse("aboutページ")
