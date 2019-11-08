@@ -12,9 +12,8 @@ workflows:
           region: ${AWS_DEFAULT_REGION}
 
       - aws-ecs/deploy-service-update:
-          requires:
-            - aws-ecr/build_and_push_image
           aws-region: ${AWS_DEFAULT_REGION}
           family: "${TASK_DEFINITION}"
           cluster-name: "${CLUSTER_NAME}"
+          service-name: "django-sample-test10"
           container-image-name-updates: "container=django,image-and-tag=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/django-sample:latest"
