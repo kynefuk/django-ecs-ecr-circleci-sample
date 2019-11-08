@@ -12,6 +12,8 @@ workflows:
           region: ${AWS_DEFAULT_REGION}
 
       - aws-ecs/deploy-service-update:
+          requires:
+              - aws-ecr/build_and_push_image
           aws-region: ${AWS_DEFAULT_REGION}
           family: "${TASK_DEFINITION}"
           cluster-name: "${CLUSTER_NAME}"
