@@ -15,5 +15,6 @@ workflows:
           requires:
             - aws-ecr/build_and_push_image
           aws-region: ${AWS_DEFAULT_REGION}
-          family: "${TASK_DEFINITION}-service"
-          cluster-name: "${CLUSTER_NAME}-cluster"
+          family: "${TASK_DEFINITION}"
+          cluster-name: "${CLUSTER_NAME}"
+          container-image-name-updates: "container=django,image-and-tag=${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/{$AWS_RESOURCE_NAME_PREFIX}:latest}"
